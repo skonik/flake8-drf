@@ -1,0 +1,31 @@
+
+[tool.poetry]
+name = "flake8-drf"
+version = "0.1.0"
+license = "MIT"
+description = ""
+readme = "README.md"
+authors = ["Sergei Konik <s.konik.dev@gmail.com>"]
+keywords = ["flake8", "django-rest-framework", "lint"]
+repository = "https://github.com/rocioar/flake8-drf"
+classifiers=[
+    "Framework :: Flake8",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+]
+
+[tool.poetry.plugins]
+[tool.poetry.plugins."flake8.extension"]
+DRF = "flake8_drf.plugin:Plugin"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+flake8 = "^6.0.0"
+djangorestframework = "^3.14.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
