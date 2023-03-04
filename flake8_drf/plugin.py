@@ -17,17 +17,12 @@ class Visitor(ast.NodeVisitor):
     def __init__(self) -> None:
         self.errors: List[Flake8Error] = []
 
-    def visit(self, node):
-        node.parent = self.parent
-        self.parent = node
-
-        return super().visit(node)
 
     def _check_error(
             self,
             status_code: int,
             arg: Union[ast.arg, ast.keyword],
-    ) -> str:
+    ) -> None:
         if status_code in STATUS_CODES.keys():
             change_to = STATUS_CODES[status_code]
             error = Flake8Error(
@@ -37,17 +32,17 @@ class Visitor(ast.NodeVisitor):
             )
             self.errors.append(error)
 
-    def _check_positional_args(self, node):
+    def _check_positional_args(self, node: ast.Call) -> None:
         if node.args:
             arg = node.args[0]
             if isinstance(arg, ast.Constant):
                 status_code = arg.value
                 self._check_error(status_code, arg)
 
-    def _check_status_keyword_args(self, node):
+    def _check_status_keyword_args(self, node: ast.Call):
         for keyword in node.keywords:
             if keyword.arg == DRF_RESPONSE_STATUS_KEYWORD:
-                if isinstance(keyword.value, ast.Constant):
+                if isinstance(keyword.value, (ast.Constant, ast.Num)):
                     status_code = keyword.value.value
                     self._check_error(status_code, keyword)
 
@@ -69,6 +64,5 @@ class Plugin:
     def run(self) -> Generator[Tuple[int, int, str, Type[Any]], None, None]:
         visitor = Visitor()
         visitor.visit(self._tree)
-
         for error in visitor.errors:
             yield error.lineno, error.col_offset, error.msg, type(self)
