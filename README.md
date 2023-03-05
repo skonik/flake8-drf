@@ -3,13 +3,13 @@
 </p>
 
 <h1 align="center">
- flake8-drf
+ ❄️ flake8-drf 🌹
 </h1>
 <p align="center">
-    Flake8 plugin for django-rest-framework
+   ❄️Flake8 plugin for django-rest-framework 🌹
 </p>
 
-# flake8-drf
+# Description
 
 Flake8 plugin that detects some issues with your drf code.
 Work in progress. Currently detects places where you should use drf status constants.
