@@ -1,3 +1,14 @@
+<p align="center">
+  <img width="400" height="400" src="assets/logo.png">
+</p>
+
+<h1 align="center">
+ flake8-drf
+</h1>
+<p align="center">
+    Flake8 plugin for django-rest-framework
+</p>
+
 # flake8-drf
 
 Flake8 plugin that detects some issues with your drf code.
